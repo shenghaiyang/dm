@@ -1,5 +1,6 @@
 # dm
-Java 获取最新依赖的版本
+
+Java 获取依赖最新版本，基于jcenter爬取
 
 ## Usage
 
