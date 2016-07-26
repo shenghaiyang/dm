@@ -12,7 +12,9 @@ import retrofit2.Retrofit;
 import retrofit2.converter.simplexml.SimpleXmlConverterFactory;
 
 import java.io.*;
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -59,6 +61,7 @@ public class DependencyDownloader {
         successCount = 0;
         failureCount = 0;
         int count = map.size();
+        List<String> list = new ArrayList<>();
         for (String key : map.keySet()) {
             logger.info(key + " start download.");
             String path = map.get(key);
@@ -67,24 +70,31 @@ public class DependencyDownloader {
                 public void onResponse(Call<Dependency> call, Response<Dependency> response) {
                     String dependency = response.body().toString();
                     logger.info(dependency);
-                    try {
-                        FileUtils.writeStringToFile(file, dependency + "\r\n", "UTF-8", true);
-                        logger.info(key + " saved to file.");
-                        successCount++;
-                    } catch (IOException e) {
-                        logger.error(key + " saved error.", e);
-                        failureCount++;
-                    } finally {
-                        if (successCount + failureCount == count) {
-                            logger.info("Finished! success count:" + successCount +
-                                    ", failure count:" + failureCount);
+                    list.add(dependency);
+                    if (list.size() == count) {
+                        synchronized (list) {
+                            if (list.size() == count) {
+                                Collections.sort(list);
+                                StringBuffer buffer = new StringBuffer();
+                                for (String str : list) {
+                                    buffer.append(str).append("\r\n");
+                                }
+                                try {
+                                    FileUtils.writeStringToFile(file, buffer.toString(),
+                                            "UTF-8", false);
+                                } catch (IOException e) {
+                                    logger.error("Error in save to file.");
+                                    e.printStackTrace();
+                                } finally {
+                                    logger.info("SUCCESS");
+                                }
+                            }
                         }
                     }
                 }
 
                 @Override
                 public void onFailure(Call<Dependency> call, Throwable t) {
-                    failureCount++;
                     logger.error(key + " download error.", t);
                 }
             });
