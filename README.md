@@ -1,14 +1,13 @@
-# dm
+# dm (Dependency Manager)
 
-Java 获取依赖最新版本，基于jcenter爬取
+A evil tool from jcenter to get the latest dependencies.
 
 ## Usage
 
-- 可执行程序位于application文件夹下，只下载该文件夹内文件即可运行
-- windows下双击start.bat,其他操作系统请使用命令运行jar包
+run start.bat on windows or run the jar file.
 
 ## 关于path.yaml
 
-- 待补充
-
-## 协议后续补充
+'''yaml
+nickname: groupId/artifactId
+'''
