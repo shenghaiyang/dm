@@ -6,8 +6,9 @@ A evil tool from jcenter to get the latest dependencies.
 
 run start.bat on windows or run the jar file.
 
-## 关于path.yaml
+## About path.yaml
 
-'''yaml
+```yml
 nickname: groupId/artifactId
-'''
+
+```
