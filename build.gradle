@@ -9,8 +9,8 @@ repositories {
 
 dependencies {
 
-    compile 'com.squareup.retrofit2:retrofit:2.1.0'
-    compile 'com.squareup.retrofit2:converter-simplexml:2.1.0'
+    compile 'com.squareup.retrofit2:retrofit:2.3.0'
+    compile 'com.squareup.retrofit2:converter-simplexml:2.3.0'
 
     compile 'commons-io:commons-io:2.5'
 
